@@ -4,19 +4,25 @@ import Header from './header.js';
 import ShowTodoList from './list.js';
 import Footer from './footer.js';
 
+const toDoLists = [
+    {
+        text: 'complete react study',
+        completed:true
+    },
+    {
+        text: 'complete house cleaning',
+        completed: true,
+    }
+]
 export default class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             Todos:[
-                {
-                    text: 'complete react study',
-                    completed:true
-                },
-                {
-                   text: 'complete house cleaning',
-                    completed: true,
-                }
+                ...toDoLists
+            ],
+            TodosShare:[
+                ...toDoLists
             ],
             filterConditions: [
               'ShowAll',
@@ -35,18 +41,37 @@ export default class App extends React.Component {
                     text: val,
                     completed: false,
                 }],
+                TodosShare: [
+                    ...prevState.TodosShare, {
+                        text: val,
+                        completed: false,
+                    }
+                ]
             }
         });
     }
     setFilter(item){
        this.setState((prevState) =>{
-           const filterTodos = prevState.Todos.filter(item => item.completed === item);
            if(item === 'ShowAll'){
-               return prevState;
-           } else {
                return {
-                   Todos:[
-                       ...filterTodos
+                   TodosShare:[
+                       ...prevState.Todos
+                   ]
+               }
+           }
+           if(item === 'ShowCompleted'){
+               const filterTodos = prevState.Todos.filter(item => item.completed === true);
+               return {
+                   TodosShare:[
+                       ...prevState.Todos
+                   ]
+               }
+           }
+           if(item === 'ShowUncompleted'){
+               const filterTodos = prevState.Todos.filter(item => item.completed === false);
+               return {
+                   TodosShare:[
+                       ...prevState.Todos
                    ]
                }
            }
@@ -56,7 +81,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <Header addToDoClick={this.addToDoClick}/>
-                <ShowTodoList Todos={this.state.Todos}/>
+                <ShowTodoList Todos={this.state.TodosShare}/>
                 <Footer filterConditions={this.state.filterConditions} setFilter={this.setFilter}/>
             </div>
         )
