@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './header.js';
-import List from './list.js';
+import ShowTodoList from './list.js';
 import Footer from './footer.js';
 
 export default class App extends React.Component {
@@ -11,11 +11,11 @@ export default class App extends React.Component {
             Todos:[
                 {
                     text: 'complete react study',
-                    completed:false
+                    completed:true
                 },
                 {
                    text: 'complete house cleaning',
-                    completed: false,
+                    completed: true,
                 }
             ],
             filterConditions: [
@@ -24,13 +24,41 @@ export default class App extends React.Component {
               'ShowUncompleted',
             ],
         }
+        this.addToDoClick = this.addToDoClick.bind(this);
+        this.setFilter = this.setFilter.bind(this);
+    }
+    addToDoClick(val){
+        this.setState((prevState) =>{
+            console.log('newState', prevState.Todos);
+            return {
+                Todos: [...prevState.Todos, {
+                    text: val,
+                    completed: false,
+                }],
+            }
+        });
+    }
+    setFilter(item){
+       this.setState((prevState) =>{
+           const filterTodos = prevState.Todos.filter(item => item.completed === item);
+           if(item === 'ShowAll'){
+               return prevState;
+           } else {
+               return {
+                   Todos:[
+                       ...filterTodos
+                   ]
+               }
+           }
+       });
     }
     render(){
         return (
-            <Header/>,
-            <List Todos={this.state.ToDos}/>,
-            <Footer filterConditions={this.state.filterConditions
-            }/>
+            <div>
+                <Header addToDoClick={this.addToDoClick}/>
+                <ShowTodoList Todos={this.state.Todos}/>
+                <Footer filterConditions={this.state.filterConditions} setFilter={this.setFilter}/>
+            </div>
         )
     }
 }

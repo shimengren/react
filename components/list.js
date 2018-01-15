@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 
 function ShowTodoList(props){
-    const listItems = props.Todos.map((todo) =>{
+    console.log('children', props.Todos);
+    const listItems = props.Todos.map((todo,index) =>{
         return (
-            <li>{todo.text}</li>
+            <li key={index}>{todo.text}</li>
         )
     });
     return (
-        <ul>{listItems}</ul>
+        <div>{listItems}</div>
     )
 }
 
 ShowTodoList.propTypes={
-    Todos:PropTypes.array.isReuired,
+    Todos:PropTypes.array.isRequired,
 }
 export default ShowTodoList;

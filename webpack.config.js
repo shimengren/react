@@ -10,15 +10,21 @@ module.exports={
         filename: "bundle.js",
     },
     module: {
-        rules: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-                plugins: ['transform-runtime'],
-                presets: ['env', 'react', 'stage-2']
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    plugins: ['transform-runtime'],
+                    presets: ['env', 'react', 'stage-2']
+                }
+            },
+            {
+                test: /\.css$/,
+                loader:'style-loader!css-loader',
             }
-        }]
+        ]
     },
     plugins:[
         new HtmlWebpackPlugin({
