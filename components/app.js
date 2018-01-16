@@ -7,13 +7,13 @@ import Footer from './footer.js';
 const toDoLists = [
     {
         text: 'complete react study',
-        completed:true
+        completed:true,
     },
     {
         text: 'complete house cleaning',
         completed: true,
     }
-]
+];
 export default class App extends React.Component {
     constructor(props){
         super(props);
@@ -29,13 +29,32 @@ export default class App extends React.Component {
               'ShowCompleted',
               'ShowUncompleted',
             ],
+            currentFilterCondition: 'ShowAll',
         }
         this.addToDoClick = this.addToDoClick.bind(this);
         this.setFilter = this.setFilter.bind(this);
+        this.changeTodo = this.changeTodo.bind(this);
+    }
+    changeTodo(todo ,index){
+        this.setState((prevState) =>{
+            console.log('todo',todo);
+           const updatedTodos = prevState.Todos.map((item,index) =>{
+               debugger;
+               if(todo.index === index){
+                   return Object.assign({},item,{completed: true});
+               }
+               return item;
+           });
+           return {
+               Todos: [
+                   ...updatedTodos,
+               ],
+           }
+        });
+        this.setFilter(this.state.currentFilterCondition);
     }
     addToDoClick(val){
         this.setState((prevState) =>{
-            console.log('newState', prevState.Todos);
             return {
                 Todos: [...prevState.Todos, {
                     text: val,
@@ -49,30 +68,43 @@ export default class App extends React.Component {
                 ]
             }
         });
+       this.setFilter(this.state.currentFilterCondition);
     }
     setFilter(item){
        this.setState((prevState) =>{
+           const toDos = prevState.Todos.map((item,index) => {
+               return {
+                   text: item.text,
+                   completed:item.completed,
+                   index:index,
+               }
+           });
            if(item === 'ShowAll'){
                return {
                    TodosShare:[
-                       ...prevState.Todos
-                   ]
+                       ...toDos
+                   ],
+                   currentFilterCondition: item,
                }
            }
            if(item === 'ShowCompleted'){
-               const filterTodos = prevState.Todos.filter(item => item.completed === true);
+               const filterTodos = toDos.filter(item => item.completed === true);
+               console.log('aa', filterTodos);
                return {
                    TodosShare:[
-                       ...prevState.Todos
-                   ]
+                       ...filterTodos
+                   ],
+                   currentFilterCondition: item,
                }
            }
            if(item === 'ShowUncompleted'){
-               const filterTodos = prevState.Todos.filter(item => item.completed === false);
+               const filterTodos = toDos.filter(item => item.completed === false);
+               console.log('filterTodos', filterTodos);
                return {
                    TodosShare:[
-                       ...prevState.Todos
-                   ]
+                       ...filterTodos
+                   ],
+                   currentFilterCondition: item,
                }
            }
        });
@@ -81,7 +113,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <Header addToDoClick={this.addToDoClick}/>
-                <ShowTodoList Todos={this.state.TodosShare}/>
+                <ShowTodoList Todos={this.state.TodosShare} changeTodo={this.changeTodo}/>
                 <Footer filterConditions={this.state.filterConditions} setFilter={this.setFilter}/>
             </div>
         )

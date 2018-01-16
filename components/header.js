@@ -8,7 +8,6 @@ class Header extends React.Component{
         this.addTodo = this.addTodo.bind(this);
     }
     addTodo(){
-      console.log('addTodo');
       const inputDom = this.refs.input;
       const val = inputDom.value.trim();
       this.props.addToDoClick(val);

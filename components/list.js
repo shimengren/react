@@ -1,16 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function ShowTodoList(props){
-    console.log('children', props.Todos);
-    const listItems = props.Todos.map((todo,index) =>{
+const completedStyle = {
+    textDecoration: 'line-through',
+}
+class ShowTodoList extends React.Component{
+    getStyle(todo){
+        if(todo.completed){
+            return completedStyle;
+        }
+    }
+    changeStyle(todo,index){
+        this.props.changeTodo(todo, index);
+    }
+    render(){
+        const listItems = this.props.Todos.map((todo,index) =>{
+            return (
+                <li key={index} style={this.getStyle(todo)} onClick={this.changeStyle.bind(this, todo,index)}>{todo.text}</li>
+            )
+        });
         return (
-            <li key={index}>{todo.text}</li>
+            <div>{listItems}</div>
         )
-    });
-    return (
-        <div>{listItems}</div>
-    )
+    }
 }
 
 ShowTodoList.propTypes={
