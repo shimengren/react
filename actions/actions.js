@@ -1,15 +1,25 @@
+import {
+    ADD_TODO,
+    FILTER_TODOS_SHARE,
+    SET_VISIBILITY_FILTER,
+    ADD_TODOS_SHARE,
+    CHANGE_TODO
+} from './../actionTypes';
+
+
 function addTodo(text){
     const action = {
         type: 'ADD_TODO',
         text
     };
-    return aciton;
+    return action;
 }
-function toggleTodo(index){
-    const action = {
-        type: 'TOGGLE_TODO',
-        index
-    };
+function filterTodos(text){
+    debugger;
+    const action ={
+        type: 'FILTER_TODOS_SHARE',
+        text,
+    }
     return action;
 }
 function setVisibilityFilter(fiter){
@@ -19,9 +29,25 @@ function setVisibilityFilter(fiter){
     };
     return action;
 }
-
-export default{
-    addTodo,
-    toggleTodo,
-    setVisibilityFilter
+function addTodoShare(text){
+    const action = {
+        type: 'ADD_TODOS_SHARE',
+        text,
+    }
+    return action;
 }
+function changeTodo(todo, index){
+    const action ={
+        type: 'CHANGE_TODO',
+        index
+    }
+    return action;
+}
+
+export {
+    changeTodo,
+    addTodo,
+    filterTodos,
+    addTodoShare,
+    setVisibilityFilter
+};

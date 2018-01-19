@@ -2,6 +2,10 @@ import PropTypes from 'prop-types';
 import { findDOMNode } from 'react';
 import React from 'react';
 
+var styleObject={
+    backgroundColor: 'red'
+}
+
 class Header extends React.Component{
     constructor(props){
         super(props);
@@ -16,7 +20,7 @@ class Header extends React.Component{
     render(){
         return (
             <div>
-                <input type='text' ref="input"/>
+                <input type="text" ref="input" style={styleObject}/>
                 <button onClick={this.addTodo}>增加</button>
             </div>
         )

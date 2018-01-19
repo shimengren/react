@@ -1,121 +1,51 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from './header.js';
 import ShowTodoList from './list.js';
 import Footer from './footer.js';
+import {connect} from 'react-redux';
+import {addTodo,addTodoShare, filterTodos} from './../actions/actions.js';
+import PropTypes from 'prop-types';
 
-const toDoLists = [
-    {
-        text: 'complete react study',
-        completed:true,
-    },
-    {
-        text: 'complete house cleaning',
-        completed: true,
-    }
-];
-export default class App extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            Todos:[
-                ...toDoLists
-            ],
-            TodosShare:[
-                ...toDoLists
-            ],
-            filterConditions: [
-              'ShowAll',
-              'ShowCompleted',
-              'ShowUncompleted',
-            ],
-            currentFilterCondition: 'ShowAll',
-        }
-        this.addToDoClick = this.addToDoClick.bind(this);
-        this.setFilter = this.setFilter.bind(this);
-        this.changeTodo = this.changeTodo.bind(this);
-    }
-    changeTodo(todo ,index){
-        this.setState((prevState) =>{
-            console.log('todo',todo);
-           const updatedTodos = prevState.Todos.map((item,index) =>{
-               debugger;
-               if(todo.index === index){
-                   return Object.assign({},item,{completed: true});
-               }
-               return item;
-           });
-           return {
-               Todos: [
-                   ...updatedTodos,
-               ],
-           }
-        });
-        this.setFilter(this.state.currentFilterCondition);
-    }
-    addToDoClick(val){
-        this.setState((prevState) =>{
-            return {
-                Todos: [...prevState.Todos, {
-                    text: val,
-                    completed: false,
-                }],
-                TodosShare: [
-                    ...prevState.TodosShare, {
-                        text: val,
-                        completed: false,
-                    }
-                ]
-            }
-        });
-       this.setFilter(this.state.currentFilterCondition);
-    }
-    setFilter(item){
-       this.setState((prevState) =>{
-           const toDos = prevState.Todos.map((item,index) => {
-               return {
-                   text: item.text,
-                   completed:item.completed,
-                   index:index,
-               }
-           });
-           if(item === 'ShowAll'){
-               return {
-                   TodosShare:[
-                       ...toDos
-                   ],
-                   currentFilterCondition: item,
-               }
-           }
-           if(item === 'ShowCompleted'){
-               const filterTodos = toDos.filter(item => item.completed === true);
-               console.log('aa', filterTodos);
-               return {
-                   TodosShare:[
-                       ...filterTodos
-                   ],
-                   currentFilterCondition: item,
-               }
-           }
-           if(item === 'ShowUncompleted'){
-               const filterTodos = toDos.filter(item => item.completed === false);
-               console.log('filterTodos', filterTodos);
-               return {
-                   TodosShare:[
-                       ...filterTodos
-                   ],
-                   currentFilterCondition: item,
-               }
-           }
-       });
-    }
+ class App extends React.Component {
+     static contextTypes = {
+         store: PropTypes.object,
+     };
+     constructor(props){
+         super(props);
+         this.state={
+             filterConditions: [
+                 'SHOW_ALL',
+                 'SHOW_COMPLETED',
+                 'SHOW_UNCOMPLETED',
+             ]
+         }
+         this.changeTodo = this.changeTodo.bind(this);
+     }
+     componentDidMount(){
+         this.context.store.dispatch(filterTodos('SHOW_ALL'));
+     }
+     changeTodo(index){
+         const filterCondition = this.context.store.state.filterCondition;
+         this.context.store.dispatch(changeTodo(index));
+         this.context.store.dispatch(filterTodos())
+     }
     render(){
+        const {dispatch, TodosShare, toDos} = this.props;
+        console.log('TodosShare', TodosShare);
         return (
             <div>
-                <Header addToDoClick={this.addToDoClick}/>
-                <ShowTodoList Todos={this.state.TodosShare} changeTodo={this.changeTodo}/>
-                <Footer filterConditions={this.state.filterConditions} setFilter={this.setFilter}/>
+                <Header addToDoClick={text => dispatch(addTodo(text))}/>
+                <ShowTodoList Todos={TodosShare} changeTodo={(index) => this.changeTodo(index)}/>
+                <Footer filterConditions={this.state.filterConditions} setFilter={item => dispatch(filterTodos(item))}/>
             </div>
         )
     }
 }
+function select(state){
+    return{
+        TodosShare: state.TodosShare,
+        toDos: state.toDos,
+        filterCondition: state.filterCondition,
+    }
+}
+export default connect(select)(App)
