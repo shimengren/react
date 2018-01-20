@@ -15,14 +15,13 @@ function addTodo(text){
     return action;
 }
 function filterTodos(text){
-    debugger;
     const action ={
         type: 'FILTER_TODOS_SHARE',
         text,
     }
     return action;
 }
-function setVisibilityFilter(fiter){
+function setVisibilityFilter(filter){
     const action={
         type: 'SET_VISIBILITY_FILTER',
         filter
@@ -36,7 +35,7 @@ function addTodoShare(text){
     }
     return action;
 }
-function changeTodo(todo, index){
+function changeTodo(index){
     const action ={
         type: 'CHANGE_TODO',
         index

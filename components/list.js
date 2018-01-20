@@ -10,14 +10,13 @@ class ShowTodoList extends React.Component{
             return completedStyle;
         }
     }
-    changeStyle(todo,index){
-        this.props.changeTodo(todo, index);
+    changeStyle(index){
+        this.props.changeTodo(index);
     }
     render(){
-        console.log('propsTodos', this.props.Todos);
         const listItems = this.props.Todos.map((todo,index) =>{
             return (
-                <li key={index} style={this.getStyle(todo)} onClick={this.changeStyle.bind(this, todo,index)}>{todo.text}</li>
+                <li key={index} style={this.getStyle(todo)} onClick={this.changeStyle.bind(this, todo.index)}>{todo.text}</li>
             )
         });
         return (

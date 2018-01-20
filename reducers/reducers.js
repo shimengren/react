@@ -12,20 +12,24 @@ const initialState ={
         {
             text: 'Consider using Redux',
             completed: true,
+            index: 0,
         },
         {
             text: 'Keep all state in a single tree',
             completed: true,
+            index:1,
         }
     ],
     TodosShare:[
         {
             text: 'Consider using Redux',
             completed: true,
+            index: 0,
         },
         {
             text: 'Keep all state in a single tree',
             completed: true,
+            index: 1,
         }
     ],
     filterCondition: 'SHOW_ALL',
@@ -42,6 +46,7 @@ function toDoApp(state = initialState, action){
                           {
                               text: action.text,
                               completed: false,
+                              index: state.toDos.length,
                           }
                       ],
                       TodosShare:[
@@ -49,15 +54,33 @@ function toDoApp(state = initialState, action){
                           {
                               text: action.text,
                               completed: false,
+                              index: state.toDos.length,
                           }
                       ]
 
                   });
+              case CHANGE_TODO:
+                  const toggleTodos = state.toDos.map((item,index) =>{
+                        if(index === action.index){
+                            return {
+                                text: item.text,
+                                completed: !item.completed,
+                                index: action.index,
+                            }
+                        }
+                        debugger;
+                        return item;
+                  });
+                  console.log('toggleTodos',toggleTodos);
+                  return Object.assign({},state,{
+                      toDos:[
+                          ...toggleTodos,
+                      ]
+                  })
               // 显示todo列表相关的action
               case FILTER_TODOS_SHARE:
                    if(action.text === 'SHOW_COMPLETED'){
                        const filteredTodos = state.toDos.filter(item => item.completed);
-                       debugger;
                        return Object.assign({},state,{
                            TodosShare:[
                                ...filteredTodos,
@@ -66,13 +89,14 @@ function toDoApp(state = initialState, action){
                    }
                    if(action.text === 'SHOW_UNCOMPLETED'){
                        const filteredTodos = state.toDos.filter(item => !item.completed);
-                       debugger;
                        return Object.assign({},state,{
                            TodosShare:[
                                ...filteredTodos,
                            ]
                        })
                    }
+                   console.log('change', state.toDos);
+                   debugger;
                    return Object.assign({}, state, {
                        TodosShare:[
                            ...state.toDos,
@@ -87,24 +111,6 @@ function toDoApp(state = initialState, action){
                   return state;
 
           }
-}
-function toDos(state = todos, action){
-    switch(action.type){
-        case CHANGE_TODO:
-            const updatedTodos = this.state.Todos.map((item,index) =>{
-                if(action.index === index){
-                    return Object.assign({},item,{completed: true});
-                }
-                return item;
-            });
-            return Object.assign({}, state, {
-                toDos: [
-                    ...updatedTodos,
-                ]
-            });
-        default:
-            return state;
-    }
 }
 
 

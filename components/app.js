@@ -3,7 +3,7 @@ import Header from './header.js';
 import ShowTodoList from './list.js';
 import Footer from './footer.js';
 import {connect} from 'react-redux';
-import {addTodo,addTodoShare, filterTodos} from './../actions/actions.js';
+import {addTodo,addTodoShare, filterTodos,setVisibilityFilter,changeTodo} from './../actions/actions.js';
 import PropTypes from 'prop-types';
 
  class App extends React.Component {
@@ -24,19 +24,26 @@ import PropTypes from 'prop-types';
      componentDidMount(){
          this.context.store.dispatch(filterTodos('SHOW_ALL'));
      }
+     addTOdoClick(text){
+         this.context.store.dispatch(addTodo(text));
+         this.context.store.dispatch(filterTodos(this.props.filterCondition));
+     }
      changeTodo(index){
-         const filterCondition = this.context.store.state.filterCondition;
          this.context.store.dispatch(changeTodo(index));
-         this.context.store.dispatch(filterTodos())
+         this.context.store.dispatch(filterTodos(this.props.filterCondition));
+     }
+     filterTodos(item){
+         this.context.store.dispatch(filterTodos(item));
+         this.context.store.dispatch(setVisibilityFilter(item));
      }
     render(){
-        const {dispatch, TodosShare, toDos} = this.props;
-        console.log('TodosShare', TodosShare);
+        const {dispatch, TodosShare, toDos,filterCondition} = this.props;
+        console.log('todosshare', this.props.TodosShare);
         return (
             <div>
-                <Header addToDoClick={text => dispatch(addTodo(text))}/>
-                <ShowTodoList Todos={TodosShare} changeTodo={(index) => this.changeTodo(index)}/>
-                <Footer filterConditions={this.state.filterConditions} setFilter={item => dispatch(filterTodos(item))}/>
+                <Header addToDoClick={text => this.addTOdoClick(text)}/>
+                <ShowTodoList Todos={TodosShare} changeTodo={index => this.changeTodo(index)}/>
+                <Footer filterConditions={this.state.filterConditions} setFilter={item => this.filterTodos(item)}/>
             </div>
         )
     }
