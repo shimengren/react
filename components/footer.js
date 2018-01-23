@@ -22,7 +22,6 @@ class Footer extends React.Component{
       this.setState({
             tabIndex: index,
         });
-      debugger;
       this.props.setFilter(item);
     }
     setActive(index) {
