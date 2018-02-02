@@ -1,18 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app.js';
-import {createStore} from 'redux';
+import Index from './components/index'
 import {Provider} from 'react-redux';
-import todoApp from './reducers/reducers';
+import configuresStore from './configuresStore';
+import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import 'normalize.css';
+import './global.css';
+// import routers from './../router/router';
+import App from "./components/viewFirst/app";
 
-let store = createStore(todoApp);
+
+let store = configuresStore();
 
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+       <BrowserRouter>
+           <Switch>
+              <Route path="/" component={Index}/>
+           </Switch>
+       </BrowserRouter>
     </Provider>,
-   document.getElementById('root')
+    document.getElementById('root')
 );
 
 

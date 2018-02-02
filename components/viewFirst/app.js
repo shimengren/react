@@ -2,8 +2,9 @@ import React from 'react';
 import Header from './header.js';
 import ShowTodoList from './list.js';
 import Footer from './footer.js';
+import Tab from './../tab.js';
 import {connect} from 'react-redux';
-import {addTodo,addTodoShare, filterTodos,setVisibilityFilter,changeTodo} from './../actions/actions.js';
+import {addTodo,addTodoShare, filterTodos,setVisibilityFilter,changeTodo} from './../../actions/actions.js';
 import PropTypes from 'prop-types';
 
  class App extends React.Component {
@@ -22,28 +23,29 @@ import PropTypes from 'prop-types';
          this.changeTodo = this.changeTodo.bind(this);
      }
      componentDidMount(){
-         this.context.store.dispatch(filterTodos('SHOW_ALL'));
+         console.log('this', this.props);
+         this.props.dispatch(filterTodos('SHOW_ALL'));
      }
      addTOdoClick(text){
-         this.context.store.dispatch(addTodo(text));
-         this.context.store.dispatch(filterTodos(this.props.filterCondition));
+         this.props.dispatch(addTodo(text));
+         this.props.dispatch(filterTodos(this.props.filterCondition));
      }
      changeTodo(index){
-         this.context.store.dispatch(changeTodo(index));
-         this.context.store.dispatch(filterTodos(this.props.filterCondition));
+         this.props.dispatch(changeTodo(index));
+         this.props.dispatch(filterTodos(this.props.filterCondition));
      }
      filterTodos(item){
-         this.context.store.dispatch(filterTodos(item));
-         this.context.store.dispatch(setVisibilityFilter(item));
+         this.props.dispatch(filterTodos(item));
+         this.props.dispatch(setVisibilityFilter(item));
      }
     render(){
         const {dispatch, TodosShare, toDos,filterCondition} = this.props;
-        console.log('todosshare', this.props.TodosShare);
         return (
             <div>
                 <Header addToDoClick={text => this.addTOdoClick(text)}/>
                 <ShowTodoList Todos={TodosShare} changeTodo={index => this.changeTodo(index)}/>
                 <Footer filterConditions={this.state.filterConditions} setFilter={item => this.filterTodos(item)}/>
+                <Tab/>
             </div>
         )
     }

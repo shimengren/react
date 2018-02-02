@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import listStyle from './list.styl';
+import CSSModules from 'react-css-modules';
+@CSSModules(listStyle)
 
-const completedStyle = {
-    textDecoration: 'line-through',
-}
 class ShowTodoList extends React.Component{
     getStyle(todo){
         if(todo.completed){
@@ -16,7 +16,7 @@ class ShowTodoList extends React.Component{
     render(){
         const listItems = this.props.Todos.map((todo,index) =>{
             return (
-                <li key={index} style={this.getStyle(todo)} onClick={this.changeStyle.bind(this, todo.index)}>{todo.text}</li>
+                <li key={index} styleName={todo.completed ? 'completed' : ''} onClick={this.changeStyle.bind(this, todo.index)}>{todo.text}</li>
             )
         });
         return (

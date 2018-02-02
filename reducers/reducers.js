@@ -68,7 +68,6 @@ function toDoApp(state = initialState, action){
                                 index: action.index,
                             }
                         }
-                        debugger;
                         return item;
                   });
                   console.log('toggleTodos',toggleTodos);
@@ -95,8 +94,6 @@ function toDoApp(state = initialState, action){
                            ]
                        })
                    }
-                   console.log('change', state.toDos);
-                   debugger;
                    return Object.assign({}, state, {
                        TodosShare:[
                            ...state.toDos,

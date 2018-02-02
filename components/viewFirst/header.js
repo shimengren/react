@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react';
 import React from 'react';
+import CSSModules from 'react-css-modules';
+import HeaderStyle from './header.styl';
 
-var styleObject={
-    backgroundColor: 'red'
-}
-
+@CSSModules(HeaderStyle)
 class Header extends React.Component{
     constructor(props){
         super(props);
@@ -14,14 +13,16 @@ class Header extends React.Component{
     addTodo(){
       const inputDom = this.refs.input;
       const val = inputDom.value.trim();
-      this.props.addToDoClick(val);
+      if(val.length !== 0){
+          this.props.addToDoClick(val);
+      }
       inputDom.value='';
     }
     render(){
         return (
             <div>
-                <input type="text" ref="input" style={styleObject}/>
-                <button onClick={this.addTodo}>增加</button>
+                <input type="text" ref="input" styleName='inputStyle'/>
+                <button onClick={this.addTodo} styleName='buttonStyle'>增加</button>
             </div>
         )
     }
@@ -31,3 +32,4 @@ Header.propTypes={
 }
 
 export default Header;
+// export default Header;

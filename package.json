@@ -19,10 +19,25 @@
     "babel-runtime": "^6.26.0",
     "convert-source-map": "^1.5.1",
     "html-webpack-plugin": "^2.30.1",
+    "normalize.css": "^7.0.0",
     "react": "^16.2.0",
+    "react-css-modules": "^4.7.1",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.10.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "css-loader": "^0.28.9",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "style-loader": "^0.20.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "url-loader": "^0.6.2"
   }
 }
