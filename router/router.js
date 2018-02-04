@@ -5,10 +5,10 @@ import ViewSecond from './../components/viewSecond/viewSecond';
 import ViewThird from './../components/viewThird/viewThird';
 
 const routers =[
-    // {
-        // path: '/',
-        // component: App,
-        // children:[
+    {
+        path: '/',
+        component: Index,
+        children:[
             {
                 path: '/home',
                 component: App,
@@ -21,8 +21,8 @@ const routers =[
                 path: '/me',
                 component: ViewThird,
             }
-        // ]
-    // },
+        ]
+    },
 ];
 
 export default routers;

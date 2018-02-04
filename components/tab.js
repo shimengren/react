@@ -9,7 +9,7 @@ class Tab extends React.Component{
     render(){
         return (
             <div styleName='footer'>
-                <Link to='/'><div><img src='public/image/footer-home.svg'/></div></Link>
+                <Link to='/home'><div><img src='public/image/footer-home.svg'/></div></Link>
                 <Link to='/classify'><div><img src='public/image/footer-classify.svg'/></div></Link>
                 {/*<Link to='/shopping'><div><img src='public/image/footer-shopping.svg'/></div></Link>*/}
                 <Link to='/me'><div><img src='public/image/footer-me.svg'/></div></Link>
