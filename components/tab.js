@@ -2,23 +2,39 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import tabStyle from './tab.styl';
 import {Link} from 'react-router-dom';
-@CSSModules(tabStyle)
+import {withRouter} from 'react-router-dom';
+@CSSModules(tabStyle, {allowMultiple: true})
 
-// styleName="footer-classify"
+
 class Tab extends React.Component{
+    constructor(props){
+        super(props);
+    }
     render(){
+        const linkMenu = [
+            {
+                path: '/home',
+                styleName: 'footerHome',
+            },
+            {
+                path: '/classify',
+                styleName: 'footerClassify',
+            },
+            {
+                path: '/me',
+                styleName: 'footerMe',
+            }
+        ];
         return (
             <div styleName='footer'>
-                <Link to='/home'><div><img src='public/image/footer-home.svg'/></div></Link>
-                <Link to='/classify'><div><img src='public/image/footer-classify.svg'/></div></Link>
-                {/*<Link to='/shopping'><div><img src='public/image/footer-shopping.svg'/></div></Link>*/}
-                <Link to='/me'><div><img src='public/image/footer-me.svg'/></div></Link>
+                {linkMenu.map((item, i) =>
+                {return (<Link to={item.path}  key={i} styleName={ this.props.match.path === item.path ? `${item.styleName} activeStyle`:item.styleName}></Link>)})}
             </div>
         )
     }
 
 }
 
-export default Tab;
+export default withRouter(Tab);
 
 

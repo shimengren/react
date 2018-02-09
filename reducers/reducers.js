@@ -1,9 +1,7 @@
-import { combineReducers } from 'redux';
 import {
     ADD_TODO,
     FILTER_TODOS_SHARE,
     SET_VISIBILITY_FILTER,
-    ADD_TODOS_SHARE,
     CHANGE_TODO
 } from './../actionTypes';
 const initialState ={
@@ -70,7 +68,6 @@ function toDoApp(state = initialState, action){
                         }
                         return item;
                   });
-                  console.log('toggleTodos',toggleTodos);
                   return Object.assign({},state,{
                       toDos:[
                           ...toggleTodos,

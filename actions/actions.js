@@ -5,45 +5,44 @@ import {
     ADD_TODOS_SHARE,
     CHANGE_TODO
 } from './../actionTypes';
+import service from './../service/service';
 
-
-function addTodo(text){
-    const action = {
+const getCompanyList = (pageIndex) => service.getList(pageIndex).then((data) =>{
+   return Promise.resolve(data);
+})
+const addTodo = (text) => (dispatch) => {
+    dispatch({
         type: 'ADD_TODO',
-        text
-    };
-    return action;
+        text,
+    })
 }
-function filterTodos(text){
-    const action ={
+const filterTodos = (text) => (dispatch) => {
+    dispatch({
         type: 'FILTER_TODOS_SHARE',
         text,
-    }
-    return action;
+    })
 }
-function setVisibilityFilter(filter){
-    const action={
+const setVisibilityFilter = (filter) => (dispatch) => {
+    dispatch({
         type: 'SET_VISIBILITY_FILTER',
         filter
-    };
-    return action;
+    })
 }
-function addTodoShare(text){
-    const action = {
+const addTodoShare = (text) => (dispatch) => {
+    dispatch({
         type: 'ADD_TODOS_SHARE',
         text,
-    }
-    return action;
+    })
 }
-function changeTodo(index){
-    const action ={
+const changeTodo = (index) => (dispatch) =>{
+    dispatch({
         type: 'CHANGE_TODO',
         index
-    }
-    return action;
+    })
 }
 
 export {
+    getCompanyList,
     changeTodo,
     addTodo,
     filterTodos,

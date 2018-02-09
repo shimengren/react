@@ -1,9 +1,8 @@
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route, Redirect, withRouter} from 'react-router-dom';
 import routers from './../router/router';
-console.log('routes', routers)
 
-export default class Index extends React.Component{
+ class Index extends React.Component{
     render(){
         return (
             <div id="route">
@@ -13,3 +12,5 @@ export default class Index extends React.Component{
         )
     }
 }
+
+export default withRouter(Index);

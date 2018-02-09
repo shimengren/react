@@ -3,7 +3,7 @@ import App from './../components/viewFirst/app';
 import Index from './../components/index'
 import ViewSecond from './../components/viewSecond/viewSecond';
 import ViewThird from './../components/viewThird/viewThird';
-
+import Detail from './../views/detail';
 const routers =[
     {
         path: '/',
@@ -20,6 +20,10 @@ const routers =[
             {
                 path: '/me',
                 component: ViewThird,
+            },
+            {
+                path: '/detail',
+                component: Detail,
             }
         ]
     },

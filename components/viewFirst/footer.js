@@ -15,7 +15,6 @@ class Footer extends React.Component{
       this.setState({
             tabIndex: index,
         });
-      console.log(this.state.tabIndex);
       this.props.setFilter(item);
     }
     render(){

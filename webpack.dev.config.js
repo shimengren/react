@@ -1,13 +1,12 @@
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var devServer = require('webpack-dev-server');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports={
     devtool: "source-map",
     entry: './index.js',
     output: {
-        path: __dirname + '/build',
         filename: "bundle.js",
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -40,26 +39,10 @@ module.exports={
     resolve: {
         extensions: ['.js']
     },
-    plugins:[
+    plugins: [
         new HtmlWebpackPlugin({
             template: './template.html', // 源模板文件
             filename: './index.html', //
         }),
-        new webpack.HotModuleReplacementPlugin()
-    ],
-    devServer: {
-        hot:true,
-        inline:true,
-        port:8090,
-        historyApiFallback: true,
-        proxy: {
-            "/api":{
-                target: 'http://ireport.link-off.lianjia.com/',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/api': ''
-                }
-            }
-        }
-    }
+    ]
 }
