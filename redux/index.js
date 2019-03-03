@@ -1,3 +1,4 @@
+// 此文件为按照自己对源码理解和网上查阅资料自己实现的redux
 function createStore(reducer,initialState){
   var currentState = initialState;
   var currentReducer = reducer;
